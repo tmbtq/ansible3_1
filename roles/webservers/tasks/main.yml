@@ -1,0 +1,33 @@
+---
+- name: install httpd package
+  yum:  
+    name: httpd
+    state: installed
+    
+- name: start httpd service
+  service:
+    name: httpd
+    enabled: yes
+    state: started
+
+- name: create "index.html" file
+  copy:
+    content: "Welcome to my web server"
+    dest: "/var/www/html/index.html"
+  notify:
+    - Restart apache
+
+- name: start firewall service
+  service:
+    name: firewalld
+    enabled: yes
+    state: started
+
+- name: open ports 80,443
+  firewalld:
+    port: "{{ item }}"
+    state: enabled
+    immediate: yes
+    permanent: yes
+  loop: "{{ fw_ports }}"
+

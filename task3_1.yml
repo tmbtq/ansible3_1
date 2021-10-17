@@ -1,0 +1,10 @@
+---
+- hosts: all
+  roles:
+    - base
+
+- hosts: webservers
+  roles:
+    - webservers
+      
+      
