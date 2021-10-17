@@ -1,0 +1,12 @@
+---
+- name: install updates on RedHat Family OS
+  yum:
+    update_only: yes
+    update_cache: yes
+  when: ansible_os_family == "RedHat"
+
+- name: install updates on Debian Family OS
+  apt:
+    upgrade: dist
+    update_cache: yes
+  when: ansible_os_family == "Debian"
